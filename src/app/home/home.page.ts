@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-home',
@@ -8,5 +9,27 @@ import { Component } from '@angular/core';
 export class HomePage {
 
   constructor() {}
+  
+ ngOnInit(): void {
+  Camera.requestPermissions();
+  
+}
+imagenParaMostrar:string="";
+imagenTomada:any;  
+async getPicture() {
+ this.imagenTomada = await Camera.getPhoto({
+   quality: 90,
+   resultType: CameraResultType.Uri,
+   source:CameraSource.Camera
+ });
+ if(this.imagenTomada){
+   this.imagenParaMostrar = this.imagenTomada.webPath
+ }
 
+
+}
+
+getPhoto(){
+  return this.imagenParaMostrar;
+}
 }
